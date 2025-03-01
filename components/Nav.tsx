@@ -31,16 +31,16 @@ export default function Nav() {
                 meal deal showdown
             </Link>
 
-            <Link href="/" className={`ml-4 ${pathname === "/" ? "underline font-bold" : ""}`}>
+            <Link href="/" className={`ml-4 ${pathname === "/" ? "font-bold" : ""}`}>
                 Meal Deal Leaderboard
             </Link>
-            <Link href="/drinks" className={`ml-4 ${pathname === "/drinks" ? "underline font-bold" : ""}`}>
+            <Link href="/drinks" className={`ml-4 ${pathname === "/drinks" ? "font-bold" : ""}`}>
                 Drinks Leaderboard
             </Link>
-            <Link href="/snacks" className={`ml-4 ${pathname === "/snacks" ? "underline font-bold" : ""}`}>
+            <Link href="/snacks" className={`ml-4 ${pathname === "/snacks" ? "font-bold" : ""}`}>
                 Snacks Leaderboard
             </Link>
-            <Link href="/mains" className={`ml-4 ${pathname === "/mains" ? "underline font-bold" : ""}`}>
+            <Link href="/mains" className={`ml-4 ${pathname === "/mains" ? "font-bold" : ""}`}>
                 Mains Leaderboard
             </Link>
 

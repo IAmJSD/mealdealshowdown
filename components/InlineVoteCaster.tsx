@@ -2,6 +2,7 @@
 
 import { useLastVoted, castVote } from "@/lib/state";
 import Link from "next/link";
+import { useCallback } from "react";
 
 type Props = {
     drinkId: string;
@@ -10,13 +11,13 @@ type Props = {
 };
 
 export default function InlineVoteCaster({ drinkId, snackId, mainId }: Props) {
-    async function tryToCastVote() {
+    const tryToCastVote = useCallback(async () => {
         try {
             await castVote(drinkId, snackId, mainId);
         } catch (e) {
             console.error(e);
         }
-    }
+    }, [drinkId, snackId, mainId]);
 
     const lastVoted = useLastVoted();
     if (lastVoted === undefined) {
@@ -34,7 +35,7 @@ export default function InlineVoteCaster({ drinkId, snackId, mainId }: Props) {
     if ((Date.now() - lastVoted.getTime()) > 1000 * 60 * 60 * 24) {
         return (
             <>
-                : <button className="underline cursor-pointer" onClick={() => tryToCastVote(drinkId, snackId, mainId)}>Cast Vote</button>
+                : <button className="underline cursor-pointer" onClick={() => tryToCastVote()}>Cast Vote</button>
             </>
         );
     }

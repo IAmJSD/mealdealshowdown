@@ -9,6 +9,7 @@ export const runtime = "edge";
 async function TopMealDeals() {
   async function getTopMealDeals() {
     "use server";
+
     return await getTopMealDealsServer();
   }
 
