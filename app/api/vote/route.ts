@@ -2,6 +2,8 @@ import { stackServerApp } from "@/lib/stack";
 import { json } from "@/lib/serverUtils";
 import { tryToCastVote } from "@/lib/database";
 
+export const runtime = "edge";
+
 export async function POST(req: Request) {
     const user = await stackServerApp.getUser();
     if (!user) {

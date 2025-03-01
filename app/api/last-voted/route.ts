@@ -2,6 +2,8 @@ import { stackServerApp } from "@/lib/stack";
 import { json } from "@/lib/serverUtils";
 import { getLastVoted } from "@/lib/database";
 
+export const runtime = "edge";
+
 export async function GET() {
     const user = await stackServerApp.getUser();
     if (!user) {
