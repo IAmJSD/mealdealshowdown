@@ -1,0 +1,48 @@
+query GetCategoryProducts($facet: ID, $page: Int = 1, $count: Int, $sortBy: String, $offset: Int, $favourites: Boolean, $configs: [ConfigArgType], $filterCriteria: [filterCriteria], $mediaExperiments: BrowseSearchConfig) {
+  category(
+    page: $page
+    count: $count
+    configs: $configs
+    sortBy: $sortBy
+    offset: $offset
+    facet: $facet
+    favourites: $favourites
+    config: $mediaExperiments
+    filterCriteria: $filterCriteria
+  ) {
+    pageInformation: info {
+      ...PageInformation
+      __typename
+    }
+    results {
+      node {
+        ... on MPProduct {
+          ...ProductItem
+          __typename
+        }
+        ... on ProductType {
+          ...ProductItem
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+fragment ProductItem on ProductInterface {
+  id
+  title
+  isForSale
+  defaultImageUrl
+  restrictedDelivery
+}
+
+fragment PageInformation on ListInfoType {
+  totalCount: total
+  pageNo: page
+  pageId
+  __typename
+}
