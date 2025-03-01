@@ -1,35 +1,18 @@
 import MainContainer from "@/components/MainContainer";
 import React from "react";
 import Loading from "@/components/Loading";
-import { getTopMealDeals } from "@/lib/database";
-import Item from "@/components/Item";
+import { getTopMealDeals as getTopMealDealsServer } from "@/lib/database";
+import WholeMealDealView from "@/components/WholeMealDealView";
 
 export const runtime = "edge";
 
 async function TopMealDeals() {
-  const topMealDeals = await getTopMealDeals();
+  async function getTopMealDeals() {
+    "use server";
+    return await getTopMealDealsServer();
+  }
 
-  return (
-    <ul className="list-none">
-      {topMealDeals.map((mealDeal) => (
-        <li
-          key={`${mealDeal.drink_id}-${mealDeal.snack_id}-${mealDeal.main_id}`}
-          className="border-t border-gray-200 pt-4"
-        >
-          <div className="flex gap-4">
-            <Item image={mealDeal.drink_image} name={mealDeal.drink_name} />
-            <span>+</span>
-            <Item image={mealDeal.snack_image} name={mealDeal.snack_name} />
-            <span>+</span>
-            <Item image={mealDeal.main_image} name={mealDeal.main_name} />
-          </div>
-          <p className="mt-4 text-2xl">
-            {mealDeal.vote_count} vote{mealDeal.vote_count === 1 ? "" : "s"}
-          </p>
-        </li>
-      ))}
-    </ul>
-  );
+  return <WholeMealDealView initBody={await getTopMealDeals()} getTopMealDeals={getTopMealDeals} />;
 }
 
 export default function Home() {

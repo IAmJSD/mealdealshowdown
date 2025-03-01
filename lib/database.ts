@@ -96,14 +96,14 @@ export async function getTopMains() {
 }
 
 const lastVotedQuery = `
-SELECT last_voted
+SELECT last_vote_time
 FROM user_votes
-WHERE user_id = $1
+WHERE id = $1
 `;
 
 export async function getLastVoted(userId: string, tx?: PoolClient) {
     const result = await (tx ?? pool).query(lastVotedQuery, [userId]);
-    return (result.rows[0]?.last_voted as Date | undefined) ?? null;
+    return (result.rows[0]?.last_vote_time as Date | undefined) ?? null;
 }
 
 export async function tryToCastVote(
@@ -145,12 +145,12 @@ export async function tryToCastVote(
             [drinkId, snackId, mainId]
         );
         const result = await tx.query(
-            "INSERT INTO user_votes (user_id, last_voted) VALUES ($1, NOW()) ON CONFLICT (user_id) DO UPDATE SET last_voted = NOW() RETURNING last_voted",
+            "INSERT INTO user_votes (id, last_vote_time) VALUES ($1, NOW()) ON CONFLICT (id) DO UPDATE SET last_vote_time = NOW() RETURNING last_vote_time",
             [userId],
         );
         await tx.query('COMMIT');
         return {
-            newLastVoted: new Date(result.rows[0].last_voted),
+            newLastVoted: new Date(result.rows[0].last_vote_time),
             success: true,
         }
     } catch {

@@ -15,6 +15,9 @@ export function useLastVoted() {
     return lastVotedAtom.use();
 }
 
+/** Defines callbacks for when an update is needed. */
+export const updateCallbacks: Set<() => void> = new Set();
+
 /** Cast a vote for a meal deal. */
 export async function castVote(drinkId: string, snackId: string, mainId: string) {
     const res = await fetch('/api/vote', {
@@ -24,6 +27,8 @@ export async function castVote(drinkId: string, snackId: string, mainId: string)
 
     const j: string | null = await res.json();
     lastVotedAtom.set(j ? new Date(j) : null);
+
+    updateCallbacks.forEach(cb => cb());
 
     if (!res.ok) {
         throw new Error('Failed to cast vote');
