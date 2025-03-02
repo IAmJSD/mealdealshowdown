@@ -11,10 +11,14 @@ import SectionSelector from "./SectionSelector";
 
 function SubmitVote({ drinkId, snackId, mainId }: { drinkId: string, snackId: string, mainId: string }) {
     const [submitOk, setSubmitOk] = useState<boolean | null>(null);
+    const promiseRef = useRef<Promise<void> | null>(null);
 
     useEffect(() => {
+        if (!promiseRef.current) {
+            promiseRef.current = castVote(drinkId, snackId, mainId);
+        }
         let active = true;
-        castVote(drinkId, snackId, mainId).then(() => {
+        promiseRef.current.then(() => {
             if (active) {
                 setSubmitOk(true);
             }
