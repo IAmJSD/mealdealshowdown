@@ -41,9 +41,9 @@ export async function getTopMealDeals() {
 }
 
 const topDrinksQuery = `
-SELECT id, vote_count, item.name, item.image
+SELECT meal_deal_drink_votes.id, vote_count, item.name, item.image
 FROM meal_deal_drink_votes
-JOIN meal_deal_items AS item ON id = item.id
+JOIN meal_deal_items AS item ON item.id = meal_deal_drink_votes.id
 ORDER BY vote_count DESC
 LIMIT 20
 `;
@@ -60,9 +60,9 @@ export async function getTopDrinks() {
 }
 
 const topSnacksQuery = `
-SELECT id, vote_count, item.name, item.image
+SELECT meal_deal_snack_votes.id, vote_count, item.name, item.image
 FROM meal_deal_snack_votes
-JOIN meal_deal_items AS item ON id = item.id
+JOIN meal_deal_items AS item ON item.id = meal_deal_snack_votes.id
 ORDER BY vote_count DESC
 LIMIT 20
 `;
@@ -78,9 +78,9 @@ export async function getTopSnacks() {
 }
 
 const topMainsQuery = `
-SELECT id, vote_count, item.name, item.image
+SELECT meal_deal_main_votes.id, vote_count, item.name, item.image
 FROM meal_deal_main_votes
-JOIN meal_deal_items AS item ON id = item.id
+JOIN meal_deal_items AS item ON item.id = meal_deal_main_votes.id
 ORDER BY vote_count DESC
 LIMIT 20
 `;

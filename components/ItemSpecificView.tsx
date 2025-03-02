@@ -30,11 +30,11 @@ export default function ItemSpecificView({ initBody, getTopOfTheType }: Props) {
               key={item.id}
               className="border-t border-gray-200 pt-4"
             >
-              <div className="flex gap-4">
+              <div className="flex gap-8">
                 <Image src={item.image} alt="" width={100} height={100} className="rounded-full" />
                 <div className="flex-col">
                     <p className="text-2xl">{item.name}</p>
-                    <p className="text-sm text-gray-500">{item.vote_count} vote{item.vote_count === 1 ? "" : "s"}</p>
+                    <p className="mt-2">{item.vote_count} vote{item.vote_count === 1 ? "" : "s"}</p>
                 </div>
               </div>
             </li>
