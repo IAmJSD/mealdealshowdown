@@ -4,6 +4,8 @@ import Loading from "@/components/Loading";
 import { getTopMealDeals as getTopMealDealsServer } from "@/lib/database";
 import WholeMealDealView from "@/components/WholeMealDealView";
 
+export const dynamic = "force-dynamic";
+
 async function TopMealDeals() {
     async function getTopMealDeals() {
         "use server";

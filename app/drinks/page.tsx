@@ -4,6 +4,8 @@ import Loading from "@/components/Loading";
 import { getTopDrinks } from "@/lib/database";
 import ItemSpecificView from "@/components/ItemSpecificView";
 
+export const dynamic = "force-dynamic";
+
 async function DrinksLeaderboard() {
     async function getTop() {
         "use server";
