@@ -1,6 +1,7 @@
 import "server-only";
 
 import { Pool, PoolClient } from "@neondatabase/serverless";
+import type { MealDealData } from "@/data/dataStructure";
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -162,4 +163,35 @@ export async function tryToCastVote(
     } finally {
         tx.release();
     }
+}
+
+export async function getAllFoodItems() {
+    const items: { [shop: string]: MealDealData } = {};
+    const result = (await pool.query(
+        "SELECT shop, type, id, name, image FROM meal_deal_items"
+    )).rows as {
+        shop: string;
+        type: "drink" | "snack" | "main";
+        id: string;
+        name: string;
+        image: string;
+    }[];
+    for (const item of result) {
+        let shop = items[item.shop];
+        if (!shop) {
+            shop = {
+                drinks: [],
+                snacks: [],
+                mains: [],
+            };
+            items[item.shop] = shop;
+        }
+        const bucket = shop[`${item.type}s`];
+        bucket.push({
+            id: item.id,
+            name: item.name,
+            image: item.image,
+        });
+    }
+    return items;
 }

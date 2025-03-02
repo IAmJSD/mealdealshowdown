@@ -10,7 +10,7 @@ if (typeof window !== 'undefined') {
     });
 }
 
-/** Get the last voted date */
+/** Use the last voted date */
 export function useLastVoted() {
     return lastVotedAtom.use();
 }
