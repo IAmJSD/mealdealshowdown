@@ -4,8 +4,6 @@ import Loading from "@/components/Loading";
 import { getTopSnacks } from "@/lib/database";
 import ItemSpecificView from "@/components/ItemSpecificView";
 
-export const runtime = "edge";
-
 async function SnacksLeaderboard() {
     async function getTop() {
         "use server";

@@ -1,8 +1,6 @@
 import { getAllFoodItems } from "@/lib/database";
 import FullPageVoteCaster from "@/components/FullPageVoteCaster";
 
-export const runtime = "edge";
-
 // Revalidate every 30 minutes
 export const revalidate = 1800;
 

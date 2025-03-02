@@ -4,8 +4,6 @@ import Loading from "@/components/Loading";
 import { getTopMains } from "@/lib/database";
 import ItemSpecificView from "@/components/ItemSpecificView";
 
-export const runtime = "edge";
-
 async function MainsLeaderboard() {
     async function getTop() {
         "use server";
