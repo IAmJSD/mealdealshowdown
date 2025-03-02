@@ -13,17 +13,22 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     if (
-        typeof body !== 'object' ||
+        typeof body !== "object" ||
         body === null ||
-        typeof body.drinkId !== 'string' ||
-        typeof body.snackId !== 'string' ||
-        typeof body.mainId !== 'string'
+        typeof body.drinkId !== "string" ||
+        typeof body.snackId !== "string" ||
+        typeof body.mainId !== "string"
     ) {
         return json(null, 400);
     }
 
     const { drinkId, snackId, mainId } = body;
 
-    const { newLastVoted, success } = await tryToCastVote(user.id, drinkId, snackId, mainId);
+    const { newLastVoted, success } = await tryToCastVote(
+        user.id,
+        drinkId,
+        snackId,
+        mainId,
+    );
     return json(newLastVoted.toISOString(), success ? 200 : 400);
 }

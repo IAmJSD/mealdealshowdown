@@ -18,9 +18,9 @@ type Zone = {
         title?: string;
         products?: {
             items: Product[];
-        }
+        };
     };
-}
+};
 
 type ASDAData = {
     data: {
@@ -41,7 +41,7 @@ export async function getAsdaMealDealData(): Promise<MealDealData> {
         },
         body: payload,
     });
-    const data = await response.json() as ASDAData;
+    const data = (await response.json()) as ASDAData;
     const resolvedData = {
         mains: [] as MealDealItem[],
         snacks: [] as MealDealItem[],
@@ -49,12 +49,19 @@ export async function getAsdaMealDealData(): Promise<MealDealData> {
     } satisfies MealDealData;
     for (const zone of data.data.tempo_cms_content.zones) {
         if (zone.configs?.title && zone.configs?.products) {
-            const arr = zone.configs.title === "Drinks" ? resolvedData.drinks :
-                SNACK_ZONES.includes(zone.configs.title) ? resolvedData.snacks : resolvedData.mains;
+            const arr =
+                zone.configs.title === "Drinks"
+                    ? resolvedData.drinks
+                    : SNACK_ZONES.includes(zone.configs.title)
+                      ? resolvedData.snacks
+                      : resolvedData.mains;
             for (const product of zone.configs.products.items) {
                 arr.push({
                     name: product.item.name,
-                    image: product.item.images.scene7_host + "asdagroceries/" + product.item.images.scene7_id,
+                    image:
+                        product.item.images.scene7_host +
+                        "asdagroceries/" +
+                        product.item.images.scene7_id,
                     id: product.item_id,
                 });
             }

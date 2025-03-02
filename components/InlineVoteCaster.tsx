@@ -27,22 +27,32 @@ export default function InlineVoteCaster({ drinkId, snackId, mainId }: Props) {
     if (lastVoted === null) {
         return (
             <>
-                : <Link href="/handler/sign-in" className="italic">You must be logged in to vote</Link>
+                :{" "}
+                <Link href="/handler/sign-in" className="italic">
+                    You must be logged in to vote
+                </Link>
             </>
         );
     }
 
-    if ((Date.now() - lastVoted.getTime()) > 1000 * 60 * 60 * 24) {
+    if (Date.now() - lastVoted.getTime() > 1000 * 60 * 60 * 24) {
         return (
             <>
-                : <button className="underline cursor-pointer" onClick={() => tryToCastVote()}>Cast Vote</button>
+                :{" "}
+                <button
+                    className="underline cursor-pointer"
+                    onClick={() => tryToCastVote()}
+                >
+                    Cast Vote
+                </button>
             </>
         );
     }
 
     return (
         <>
-            : <span className="italic">You can't vote again until tomorrow</span>
+            :{" "}
+            <span className="italic">You can't vote again until tomorrow</span>
         </>
-    )
+    );
 }

@@ -9,7 +9,15 @@ import MainContainer from "./MainContainer";
 import ShopSelector from "./ShopSelector";
 import SectionSelector from "./SectionSelector";
 
-function SubmitVote({ drinkId, snackId, mainId }: { drinkId: string, snackId: string, mainId: string }) {
+function SubmitVote({
+    drinkId,
+    snackId,
+    mainId,
+}: {
+    drinkId: string;
+    snackId: string;
+    mainId: string;
+}) {
     const [submitOk, setSubmitOk] = useState<boolean | null>(null);
     const promiseRef = useRef<Promise<void> | null>(null);
 
@@ -18,16 +26,18 @@ function SubmitVote({ drinkId, snackId, mainId }: { drinkId: string, snackId: st
             promiseRef.current = castVote(drinkId, snackId, mainId);
         }
         let active = true;
-        promiseRef.current.then(() => {
-            if (active) {
-                setSubmitOk(true);
-            }
-        }).catch((e) => {
-            if (active) {
-                setSubmitOk(false);
-            }
-            console.error(e);
-        });
+        promiseRef.current
+            .then(() => {
+                if (active) {
+                    setSubmitOk(true);
+                }
+            })
+            .catch((e) => {
+                if (active) {
+                    setSubmitOk(false);
+                }
+                console.error(e);
+            });
         return () => {
             active = false;
         };
@@ -41,19 +51,15 @@ function SubmitVote({ drinkId, snackId, mainId }: { drinkId: string, snackId: st
         return (
             <>
                 <h1 className="text-center text-2xl">Vote submitted!</h1>
-                <p className="text-center mt-2">
-                    Thank you for voting!
-                </p>
+                <p className="text-center mt-2">Thank you for voting!</p>
             </>
         );
     }
-    
+
     return (
         <>
             <h1 className="text-center text-2xl">Vote failed!</h1>
-            <p className="text-center mt-2">
-                Please try again.
-            </p>
+            <p className="text-center mt-2">Please try again.</p>
         </>
     );
 }
@@ -70,7 +76,8 @@ function Flow({ shopData }: Props) {
     const [snackId, setSnackId] = useState<string | null>(null);
     const [mainId, setMainId] = useState<string | null>(null);
 
-    if (!shop) return <ShopSelector keys={Object.keys(shopData)} onSelect={setShop} />;
+    if (!shop)
+        return <ShopSelector keys={Object.keys(shopData)} onSelect={setShop} />;
 
     if (!drinkId) {
         return (
@@ -111,12 +118,24 @@ function Flow({ shopData }: Props) {
 function Content({ lastVoted, shopData }: Props & { lastVoted: Date }) {
     const lastVoteLastRender = useRef(lastVoted);
 
-    if (lastVoteLastRender.current.getTime() > Date.now() - 1000 * 60 * 60 * 24) {
+    if (
+        lastVoteLastRender.current.getTime() >
+        Date.now() - 1000 * 60 * 60 * 24
+    ) {
         return (
             <>
-                <h1 className="text-center text-2xl">You can vote again soon!</h1>
+                <h1 className="text-center text-2xl">
+                    You can vote again soon!
+                </h1>
                 <p className="text-center mt-2">
-                    You can vote again in {Math.ceil((lastVoteLastRender.current.getTime() + 1000 * 60 * 60 * 24 - Date.now()) / (1000 * 60 * 60))} hours.
+                    You can vote again in{" "}
+                    {Math.ceil(
+                        (lastVoteLastRender.current.getTime() +
+                            1000 * 60 * 60 * 24 -
+                            Date.now()) /
+                            (1000 * 60 * 60),
+                    )}{" "}
+                    hours.
                 </p>
             </>
         );

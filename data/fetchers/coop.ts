@@ -2,7 +2,7 @@ import htmlParser, { type HTMLElement } from "node-html-parser";
 import type { MealDealData, MealDealItem } from "../dataStructure";
 
 function articlesToProducts(articles: HTMLElement[]): MealDealItem[] {
-    return articles.map(article => {
+    return articles.map((article) => {
         const image = article.querySelector("img");
         if (!image) {
             throw new Error("No image found");
@@ -16,7 +16,7 @@ function articlesToProducts(articles: HTMLElement[]): MealDealItem[] {
             id,
             name: article.querySelector("h3")!.textContent!,
             image: url!,
-        }
+        };
     });
 }
 
@@ -27,7 +27,9 @@ function loadUniques(s: Set<string>, mealDealData: MealDealData, html: string) {
     if (!drinksSection) {
         throw new Error("No drinks section found");
     }
-    const drinks = articlesToProducts(drinksSection.querySelectorAll("article"));
+    const drinks = articlesToProducts(
+        drinksSection.querySelectorAll("article"),
+    );
     for (const drink of drinks) {
         if (!s.has(drink.id)) {
             s.add(drink.id);
@@ -47,11 +49,14 @@ function loadUniques(s: Set<string>, mealDealData: MealDealData, html: string) {
         }
     }
 
-    const sidesSelection = root.getElementById("sides-") || root.getElementById("sides");
+    const sidesSelection =
+        root.getElementById("sides-") || root.getElementById("sides");
     if (!sidesSelection) {
         throw new Error("No sides selection found");
     }
-    const sides = articlesToProducts(sidesSelection.querySelectorAll("article"));
+    const sides = articlesToProducts(
+        sidesSelection.querySelectorAll("article"),
+    );
     for (const side of sides) {
         if (!s.has(side.id)) {
             s.add(side.id);
@@ -63,8 +68,12 @@ function loadUniques(s: Set<string>, mealDealData: MealDealData, html: string) {
 export async function getCoopMealDealData(): Promise<MealDealData> {
     const s = new Set<string>();
     const htmls = await Promise.all([
-        fetch("https://www.coop.co.uk/products/deals/lunchtime-meal-deal").then(res => res.text()),
-        fetch("https://www.coop.co.uk/products/deals/premium-meal-deal").then(res => res.text()),
+        fetch("https://www.coop.co.uk/products/deals/lunchtime-meal-deal").then(
+            (res) => res.text(),
+        ),
+        fetch("https://www.coop.co.uk/products/deals/premium-meal-deal").then(
+            (res) => res.text(),
+        ),
     ]);
     const mealDealData: MealDealData = {
         mains: [],

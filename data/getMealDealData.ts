@@ -21,10 +21,14 @@ try {
 
 (async () => {
     for (const [filename, fetcher] of Object.entries(files)) {
-        if (process.env.FILENAME_LIMITER && filename !== process.env.FILENAME_LIMITER) continue;
+        if (
+            process.env.FILENAME_LIMITER &&
+            filename !== process.env.FILENAME_LIMITER
+        )
+            continue;
         console.log(`Fetching json/${filename}`);
         const data = await fetcher();
         await writeFile(`${fp}/${filename}`, JSON.stringify(data, null, 4));
         console.log(`Wrote json/${filename}`);
-    }    
+    }
 })();

@@ -16,8 +16,18 @@ export default function ShopSelector({ keys, onSelect }: Props) {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
                 {keys.map((key) => (
-                    <button key={key} onClick={() => onSelect(key)} className="dark:bg-gray-800 bg-gray-100 rounded-md p-2 cursor-pointer">
-                        <Image src={`/${key}.png`} alt={key} width={100} className="max-h-12 object-contain" height={20} />
+                    <button
+                        key={key}
+                        onClick={() => onSelect(key)}
+                        className="dark:bg-gray-800 bg-gray-100 rounded-md p-2 cursor-pointer"
+                    >
+                        <Image
+                            src={`/${key}.png`}
+                            alt={key}
+                            width={100}
+                            className="max-h-12 object-contain"
+                            height={20}
+                        />
                     </button>
                 ))}
             </div>

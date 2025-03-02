@@ -6,13 +6,18 @@ import * as coop from "./json/coop.json";
 import type { MealDealData, MealDealItem } from "./dataStructure";
 
 const mealDealIds = new Set(
-    (await sql`SELECT id FROM meal_deal_items` as { id: string }[]).map(x => x.id)
+    ((await sql`SELECT id FROM meal_deal_items`) as { id: string }[]).map(
+        (x) => x.id,
+    ),
 );
 
 const datasets = { tesco, asda, coop };
 
 async function loadMealDeals(store: string, data: MealDealData) {
-    const insertItem = async (item: MealDealItem, type: "main" | "snack" | "drink") => {
+    const insertItem = async (
+        item: MealDealItem,
+        type: "main" | "snack" | "drink",
+    ) => {
         await sql`INSERT INTO meal_deal_items (id, shop, type, name, image) VALUES (${item.id}, ${store}, ${type}, ${item.name}, ${item.image}) ON CONFLICT (id) DO UPDATE SET in_stock = TRUE`;
         mealDealIds.delete(item.id);
     };

@@ -7,27 +7,33 @@ import WholeMealDealView from "@/components/WholeMealDealView";
 export const runtime = "edge";
 
 async function TopMealDeals() {
-  async function getTopMealDeals() {
-    "use server";
+    async function getTopMealDeals() {
+        "use server";
 
-    return await getTopMealDealsServer();
-  }
+        return await getTopMealDealsServer();
+    }
 
-  return <WholeMealDealView initBody={await getTopMealDeals()} getTopMealDeals={getTopMealDeals} />;
+    return (
+        <WholeMealDealView
+            initBody={await getTopMealDeals()}
+            getTopMealDeals={getTopMealDeals}
+        />
+    );
 }
 
 export default function Home() {
-  return (
-      <MainContainer>
-        <h1 className="text-2xl font-bold">Meal Deal Leaderboard</h1>
-        <h2 className="text-lg my-4">
-          The leaderboard of the combinations of different meals. See where yours ranks!
-        </h2>
-        <div aria-live="polite" aria-atomic="true">
-          <React.Suspense fallback={<Loading />}>
-            <TopMealDeals />
-          </React.Suspense>
-        </div>
-      </MainContainer>
-  );
+    return (
+        <MainContainer>
+            <h1 className="text-2xl font-bold">Meal Deal Leaderboard</h1>
+            <h2 className="text-lg my-4">
+                The leaderboard of the combinations of different meals. See
+                where yours ranks!
+            </h2>
+            <div aria-live="polite" aria-atomic="true">
+                <React.Suspense fallback={<Loading />}>
+                    <TopMealDeals />
+                </React.Suspense>
+            </div>
+        </MainContainer>
+    );
 }
