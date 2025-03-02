@@ -39,7 +39,7 @@ export default function WholeMealDealView({ initBody, getTopMealDeals }: Props) 
             <Item image={mealDeal.main_image} name={mealDeal.main_name} />
           </div>
           <p className="mt-4 text-2xl">
-            {mealDeal.vote_count} vote{mealDeal.vote_count === 1 ? "" : "s"}
+            <span className="font-bold">{mealDeal.vote_count} vote{mealDeal.vote_count === 1 ? "" : "s"}</span>
             <InlineVoteCaster drinkId={mealDeal.drink_id} snackId={mealDeal.snack_id} mainId={mealDeal.main_id} />
           </p>
         </li>
