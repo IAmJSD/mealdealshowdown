@@ -14,10 +14,16 @@ export default function ItemSpecificView({ initBody, getTopOfTheType }: Props) {
     const [body, setBody] = useState(initBody);
 
     useEffect(() => {
-        const hn = () => getTopOfTheType().then(setBody);
+        let active = true;
+        const hn = () => getTopOfTheType().then((body) => {
+            if (active) {
+                setBody(body);
+            }
+        });
         const interval = setInterval(hn, 60000);
         updateCallbacks.add(hn);
         return () => {
+            active = false;
             updateCallbacks.delete(hn);
             clearInterval(interval);
         };

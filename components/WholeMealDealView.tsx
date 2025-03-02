@@ -15,12 +15,18 @@ export default function WholeMealDealView({ initBody, getTopMealDeals }: Props) 
     const [body, setBody] = useState(initBody);
 
     useEffect(() => {
-        const hn = () => getTopMealDeals().then(setBody);
+        let active = true;
+        const hn = () => getTopMealDeals().then((body) => {
+            if (active) {
+                setBody(body);
+            }
+        });
         const interval = setInterval(hn, 60000);
         updateCallbacks.add(hn);
         return () => {
             updateCallbacks.delete(hn);
             clearInterval(interval);
+            active = false;
         };
     }, [getTopMealDeals]);
 
