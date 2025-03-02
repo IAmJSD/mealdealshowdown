@@ -42,7 +42,7 @@ export default function Nav() {
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
                     <Link href="/" className="text-lg font-semibold">
-                        meal deal showdown
+                        Meal Deal Showdown
                     </Link>
 
                     <div className="hidden lg:flex lg:items-center">
