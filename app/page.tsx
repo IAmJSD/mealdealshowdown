@@ -3,6 +3,7 @@ import React from "react";
 import Loading from "@/components/Loading";
 import { getTopMealDeals as getTopMealDealsServer } from "@/lib/database";
 import WholeMealDealView from "@/components/WholeMealDealView";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -34,6 +35,12 @@ export default function Home() {
                     <TopMealDeals />
                 </React.Suspense>
             </div>
+            <p className="mt-8 text-center">
+                Don't see your meal deal?{" "}
+                <Link href="/vote" className="underline">
+                    Vote for it here!
+                </Link>
+            </p>
         </MainContainer>
     );
 }
