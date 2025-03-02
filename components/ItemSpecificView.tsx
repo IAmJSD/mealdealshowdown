@@ -34,7 +34,7 @@ export default function ItemSpecificView({ initBody, getTopOfTheType }: Props) {
           {body.map((item) => (
             <li
               key={item.id}
-              className="border-t border-gray-200 pt-4"
+              className="border-t border-gray-200 py-4"
             >
               <div className="flex gap-8">
                 <Image src={item.image} alt="" width={100} height={100} className="rounded-full" />

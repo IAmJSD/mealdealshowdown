@@ -35,7 +35,7 @@ export default function WholeMealDealView({ initBody, getTopMealDeals }: Props) 
       {body.map((mealDeal) => (
         <li
           key={`${mealDeal.drink_id}-${mealDeal.snack_id}-${mealDeal.main_id}`}
-          className="border-t border-gray-200 pt-4"
+          className="border-t border-gray-200 py-4"
         >
           <div className="flex gap-4">
             <Item image={mealDeal.drink_image} name={mealDeal.drink_name} />
