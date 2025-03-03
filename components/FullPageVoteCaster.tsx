@@ -80,12 +80,14 @@ function ConfirmVote({ drink, snack, main, setConfirm }: ConfirmVoteProps) {
                 <code>{drink.name}</code> + <code>{snack.name}</code> +{" "}
                 <code>{main.name}</code>?
             </p>
-            <button
-                className="text-center mt-2 dark:bg-gray-800 bg-gray-100 rounded-md p-2 cursor-pointer"
-                onClick={() => setConfirm(true)}
-            >
-                Confirm
-            </button>
+            <p className="text-center mt-4">
+                <button
+                    className="dark:bg-gray-800 bg-gray-100 rounded-md p-2 cursor-pointer"
+                    onClick={() => setConfirm(true)}
+                >
+                    Confirm
+                </button>
+            </p>
         </>
     );
 }
