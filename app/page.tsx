@@ -40,9 +40,16 @@ export default function Home() {
             </p>
             <p className="my-4 text-center">
                 Source code is available{" "}
-                <a href="https://github.com/iamjsd/mealdealshowdown">here.</a>{" "}
+                <a
+                    className="underline"
+                    href="https://github.com/iamjsd/mealdealshowdown"
+                >
+                    here.
+                </a>{" "}
                 Powered by Neon database/Auth, Next, and Vercel. A{" "}
-                <a href="https://astrid.place">astrid.place</a>
+                <a className="underline" href="https://astrid.place">
+                    astrid.place
+                </a>{" "}
                 project.
             </p>
         </MainContainer>
