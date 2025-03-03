@@ -7,7 +7,7 @@ type Props = {
     section: MealDealItem[];
     title: string;
     description: string;
-    onSelect: (itemId: string) => void;
+    onSelect: (item: MealDealItem) => void;
 };
 
 export default function SectionSelector({
@@ -24,7 +24,7 @@ export default function SectionSelector({
                 {section.map((item) => (
                     <button
                         key={item.id}
-                        onClick={() => onSelect(item.id)}
+                        onClick={() => onSelect(item)}
                         className="dark:bg-gray-800 bg-gray-100 rounded-md p-2 cursor-pointer max-w-45"
                     >
                         <Image

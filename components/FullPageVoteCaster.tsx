@@ -1,6 +1,6 @@
 "use client";
 
-import type { MealDealData } from "@/data/dataStructure";
+import type { MealDealData, MealDealItem } from "@/data/dataStructure";
 import { castVote, useLastVoted } from "@/lib/state";
 import { redirect } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -64,6 +64,32 @@ function SubmitVote({
     );
 }
 
+type ConfirmVoteProps = {
+    drink: MealDealItem;
+    snack: MealDealItem;
+    main: MealDealItem;
+    setConfirm: (confirm: boolean) => void;
+};
+
+function ConfirmVote({ drink, snack, main, setConfirm }: ConfirmVoteProps) {
+    return (
+        <>
+            <h1 className="text-center text-2xl">Confirm your vote</h1>
+            <p className="text-center mt-2">
+                Are you sure you want to vote for the following meal deal:{" "}
+                <code>{drink.name}</code> + <code>{snack.name}</code> +{" "}
+                <code>{main.name}</code>?
+            </p>
+            <button
+                className="text-center mt-2 dark:bg-gray-800 bg-gray-100 rounded-md p-2 cursor-pointer"
+                onClick={() => setConfirm(true)}
+            >
+                Confirm
+            </button>
+        </>
+    );
+}
+
 type Props = {
     shopData: {
         [shop: string]: MealDealData;
@@ -72,47 +98,60 @@ type Props = {
 
 function Flow({ shopData }: Props) {
     const [shop, setShop] = useState<string | null>(null);
-    const [drinkId, setDrinkId] = useState<string | null>(null);
-    const [snackId, setSnackId] = useState<string | null>(null);
-    const [mainId, setMainId] = useState<string | null>(null);
+    const [drink, setDrink] = useState<MealDealItem | null>(null);
+    const [snack, setSnack] = useState<MealDealItem | null>(null);
+    const [main, setMain] = useState<MealDealItem | null>(null);
+    const [confirm, setConfirm] = useState<boolean>(false);
 
     if (!shop)
         return <ShopSelector keys={Object.keys(shopData)} onSelect={setShop} />;
 
-    if (!drinkId) {
+    if (!drink) {
         return (
             <SectionSelector
                 section={shopData[shop].drinks}
                 title="Drink"
                 description="Select a drink for your meal deal:"
-                onSelect={setDrinkId}
+                onSelect={setDrink}
             />
         );
     }
 
-    if (!snackId) {
+    if (!snack) {
         return (
             <SectionSelector
                 section={shopData[shop].snacks}
                 title="Snack"
                 description="Select a snack for your meal deal:"
-                onSelect={setSnackId}
+                onSelect={setSnack}
             />
         );
     }
 
-    if (!mainId) {
+    if (!main) {
         return (
             <SectionSelector
                 section={shopData[shop].mains}
                 title="Main"
                 description="Select a main for your meal deal:"
-                onSelect={setMainId}
+                onSelect={setMain}
             />
         );
     }
 
-    return <SubmitVote drinkId={drinkId} snackId={snackId} mainId={mainId} />;
+    if (!confirm)
+        return (
+            <ConfirmVote
+                drink={drink}
+                snack={snack}
+                main={main}
+                setConfirm={setConfirm}
+            />
+        );
+
+    return (
+        <SubmitVote drinkId={drink.id} snackId={snack.id} mainId={main.id} />
+    );
 }
 
 function Content({ lastVoted, shopData }: Props & { lastVoted: Date }) {
